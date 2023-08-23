@@ -32,7 +32,6 @@ public class MazeGenerator : MonoBehaviour
 
     public int width = 10;
     public int height = 10;
-    public int maxLength = 100;
     public int seed = 0;
 
 
@@ -47,7 +46,7 @@ public class MazeGenerator : MonoBehaviour
      */
     public void GenerateMaze()
     {
-        bool[,] maze = Maze.GenerateMaze(width, height, maxLength, seed);
+        Maze.TypeCell[,] maze = Maze.GenerateMaze(width, height, seed);
 
         //check neightbour cells to get the next cell
         for (int y = 0; y < height; y++)
@@ -56,16 +55,22 @@ public class MazeGenerator : MonoBehaviour
             {
                 Vector3 position = transform.position + new Vector3(x * 5, 0, -y * 5);
 
-                if (!maze[y, x])
+                GameObject obj;
+
+                if (maze[y, x] == Maze.TypeCell.Full)
                 {
                     GameObject mazeBlock = Resources.Load<GameObject>(PATH_MAZE_BLOCK);
-                    Instantiate(mazeBlock, position, Quaternion.identity);
+                    obj = Instantiate(mazeBlock, position, Quaternion.identity);
+                    
+                    
                 }
                 else
                 {
                     GameObject mazePlane = Resources.Load<GameObject>(PATH_MAZE_PLANE);
-                    Instantiate(mazePlane, position, Quaternion.identity);
+                    obj = Instantiate(mazePlane, position, Quaternion.identity);
                 }
+                
+                obj.transform.parent = transform;
 
                 // if (maze[y, x])
                 // {

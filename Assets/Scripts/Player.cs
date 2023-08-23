@@ -1,44 +1,32 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    CharacterController _characterController;
-
     public float speed = 10f;
-
+    
+    public CharacterController characterController;
+    
     // Start is called before the first frame update
     void Start()
     {
-        _characterController = GetComponent<CharacterController>();
+        characterController = GetComponent<CharacterController>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        Vector3? newSpeed = Vector3.zero;
-        
-        if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W))
-            newSpeed += Vector3.forward * speed;
-        if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
-            newSpeed += Vector3.right * speed;
-        if (Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S))
-            newSpeed += Vector3.back * speed;
-        if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))
-            newSpeed += Vector3.left * speed;
+        float x = Input.GetAxis("Horizontal");
+        float z = Input.GetAxis("Vertical");
+
+        Vector3 move = transform.forward * z + transform.right * x;
+
 
         // If player gives speeds then we update player and camera position
-        if (newSpeed != Vector3.zero)
+        if (move != Vector3.zero)
         {
             // Calculate the movement
-            Vector3 prevPos = transform.position;
-            _characterController.SimpleMove(newSpeed.Value);
-            Vector3 afterPos = transform.position;
-
-            // Apply also the movement to the camera
-            Camera.main.transform.position += (afterPos - prevPos);
+            characterController.Move(move * (Time.deltaTime * speed));
         }
-
     }
+    
 }
