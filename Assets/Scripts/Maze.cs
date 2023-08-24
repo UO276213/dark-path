@@ -1,4 +1,5 @@
 using System;
+using UnityEngine;
 using Random = UnityEngine.Random;
 
 public class Maze
@@ -42,7 +43,7 @@ public class Maze
             return false;
 
         // Cell not empty
-        if (maze[y, x] == TypeCell.Empty)
+        if (maze[y, x] == TypeCell.Empty || maze[y, x] == TypeCell.End)
             return false;
 
         // Check the number of neighbours

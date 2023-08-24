@@ -22,15 +22,20 @@ public class CameraController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float mouseX = Input.GetAxis("Mouse X") * sensX * Time.deltaTime ;
-        float mouseY = Input.GetAxis("Mouse Y") * sensY * Time.deltaTime ;
         
-        // yRotation += mouseX;
-        xRotation -= mouseY;
-        xRotation = Math.Clamp(xRotation, -90, 90);
+        if (Application.isFocused)
+        {
+            float mouseX = Input.GetAxis("Mouse X") * sensX * Time.deltaTime ;
+            float mouseY = Input.GetAxis("Mouse Y") * sensY * Time.deltaTime ;
+        
+            // yRotation += mouseX;
+            xRotation -= mouseY;
+            xRotation = Math.Clamp(xRotation, -90, 90);
         
         
-        playerTransform.Rotate(Vector3.up * mouseX);
-        transform.localRotation = Quaternion.Euler(xRotation, 0,  0);
+            playerTransform.Rotate(Vector3.up * mouseX);
+            transform.localRotation = Quaternion.Euler(xRotation, 0,  0);  
+        }
+        
     }
 }
