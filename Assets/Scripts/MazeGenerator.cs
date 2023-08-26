@@ -14,7 +14,13 @@ public class MazeGenerator : MonoBehaviour
 
     private Vector3 _endPosition = Vector3.negativeInfinity;
     private Vector3 _startPosition = Vector3.negativeInfinity;
-    
+
+
+    private void Start()
+    {
+        GenerateMaze();
+    }
+
     /*
      * ^              UP
      * |            _|__|_

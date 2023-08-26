@@ -25,6 +25,9 @@ public class AwardBehaviour : MonoBehaviour
         if (other.transform.CompareTag("Player"))
         {
             Destroy(this.gameObject);
+            
+            GetComponentInParent<GameLogic>().SetState(GameLogic.GameState.Completed);
         }
+
     }
 }
